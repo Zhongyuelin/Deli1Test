@@ -1,0 +1,34 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+---
+
+```{r}
+
+# 加载rvest包
+library(rvest)
+
+```
+```{r}
+# 读取维基百科上国际创新指数页面的HTML
+url <- "https://en.wikipedia.org/wiki/International_Innovation_Index"
+webpage <- read_html(url)
+
+# 抓取页面上的所有表格
+tables <- html_table(webpage, fill = TRUE)
+
+# 查看页面中有多少表格
+length(tables)
+
+# 假设你需要第一个表格，选择该表格
+innovation_index_table <- tables[[1]]
+
+# 查看抓取的表格数据
+head(innovation_index_table)
+
+# 保存抓取的数据到CSV文件
+write.csv(innovation_index_table, "international_innovation_index.csv", row.names = FALSE)
+
+```
+
