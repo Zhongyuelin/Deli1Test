@@ -1,4 +1,4 @@
-以下是完整的 `README.md` 文件，使用了 Markdown 格式，并且对内容进行了优化：
+
 
 ```markdown
 # Deli1Test - UMASS Fall 2024 DACSS690R Week 2 Example
