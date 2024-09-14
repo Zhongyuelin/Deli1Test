@@ -11,24 +11,34 @@ library(rvest)
 
 ```
 ```{r}
-# 读取维基百科上国际创新指数页面的HTML
-url <- "https://en.wikipedia.org/wiki/International_Innovation_Index"
-webpage <- read_html(url)
 
-# 抓取页面上的所有表格
-tables <- html_table(webpage, fill = TRUE)
+library(rvest)
+library(dplyr)
 
-# 查看页面中有多少表格
-length(tables)
+file_path <- "dataFiles/International Innovation Index - Wikipedia.html"  # 
 
-# 假设你需要第一个表格，选择该表格
-innovation_index_table <- tables[[1]]
 
-# 查看抓取的表格数据
-head(innovation_index_table)
+html_content <- read_html(file_path)
 
-# 保存抓取的数据到CSV文件
-write.csv(innovation_index_table, "international_innovation_index.csv", row.names = FALSE)
+
+tables <- html_content %>% html_nodes("table.wikitable") %>% html_table(fill = TRUE)
+
+
+num_tables <- length(tables)
+cat("抓取到的表格数量:", num_tables, "\n")
+
+
+if (num_tables > 0) {
+  
+  innovation_table <- tables[[1]]
+  print(innovation_table)
+  
+
+  write.csv(innovation_table, "innovation_index_table.csv", row.names = FALSE)
+  cat("表格已保存为 innovation_index_table.csv\n")
+} else {
+  cat("未找到任何表格，请检查HTML文件的结构或CSS选择器。\n")
+}
 
 ```
 
